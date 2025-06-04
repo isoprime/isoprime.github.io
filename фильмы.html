@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="худшие фильмы для мкп">
+    
+    <title>MovieHub</title>
+    <style>
+
+        
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            
+            
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+         h1 {
+            border-radius: 20px;
+            font-size: 4rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            background: black;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .movie-card {
+            background: #252540;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+    small a {
+        position: fixed;    
+    right: 20px;        
+    bottom: 20px; 
+    background: linear-gradient(to right, #ff416c, #a3ff2b);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: url(cursory.png/cursor.cur), auto;
+    font-size: 16px;
+}
+nav ul li a[href="главная.html"] {
+    font-weight: bold;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 15px;
+}
+nav ul li a[href="сохраненные.html"] {
+    font-weight: bold;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 15px;
+}
+nav ul li a[href="топ250.html"] {
+    font-weight: bold;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 15px;
+}
+nav ul li a {
+    color: black; 
+    text-decoration: none; 
+}
+
+    </style>
+</head>
+<body>
+    <small><a href="https://pm.by/ru/casino-lobby/all/" class="button-style">Для санечки</a></small>
+    <header>
+        <h1>MovieHub</h1>
+        <nav>
+            <ul>
+               
+                <li><a href="главная.html">Главная</a></li>
+                <li><a href="топ250.html">Топ-50</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="movies-grid">
+            
+        </div>
+    </main>
+     
+</body>
+</html>

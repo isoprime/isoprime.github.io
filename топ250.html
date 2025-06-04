@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Топ 9 фильмов</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(-45deg, #2c3e50, #4b6a88, #7f8c8d, #95a5a6);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        header {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+            
+            -webkit-text-fill-color: transparent;
+            padding: 5px 15px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #485563 0%, #29323c 100%);
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .movies-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 10px;
+        }
+        
+        .movie-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .movie-poster {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #2c3e50;
+        }
+        
+        .movie-info {
+            padding: 15px;
+        }
+        
+        .movie-title {
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: #f5f7fa;
+        }
+        
+        .movie-rating {
+            color: #f5c518;
+            font-weight: bold;
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+        
+        .movie-year {
+            color: #c3cfe2;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+        
+        .movie-genres {
+            color: #a5b1c2;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+            
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 900px) {
+            .movies-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .movies-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-buttons {
+                justify-content: center;
+                margin-top: 10px;
+            }
+        }
+        .logo {
+            background-color: #29323c;
+            float: left;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 5px 0;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Топ 9 фильмов</div>
+            <div class="nav-buttons">
+                <a href="фильмы.html" class="nav-button">Главная страничка</a>
+                <a href="фильмы.html" class="nav-button">Главная</a>
+            </div>
+        </div>
+    </header>
+    
+    <h1 class="page-title">Лучшие фильмы</h1>
+    
+    <div class="movies-container" id="movies-container"></div>
+
+    <script>
+        const top9Movies = [
+            {
+                title: "Крестный отец",
+                poster: "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                rating: 9.2,
+                year: 1972,
+                genres: "Криминал, Драма"
+            },
+            {
+                title: "Побег из Шоушенка",
+                poster: "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+                rating: 9.3,
+                year: 1994,
+                genres: "Драма"
+            },
+            {
+                title: "Тёмный рыцарь",
+                poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
+                rating: 9.0,
+                year: 2008,
+                genres: "Боевик, Криминал, Драма"
+            },
+            {
+                title: "Криминальное чтиво",
+                poster: "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                rating: 8.9,
+                year: 1994,
+                genres: "Криминал, Драма"
+            },
+            {
+                title: "Форест Гамп",
+                poster: "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+                rating: 8.8,
+                year: 1994,
+                genres: "Драма, Романтика"
+            },
+            {
+                title: "Властелин колец: Возвращение короля",
+                poster: "https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                rating: 8.9,
+                year: 2003,
+                genres: "Приключения, Фэнтези"
+            },
+            {
+                title: "Бойцовский клуб",
+                poster: "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                rating: 8.8,
+                year: 1999,
+                genres: "Драма"
+            },
+            {
+                title: "Интерстеллар",
+                poster: "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+                rating: 8.6,
+                year: 2014,
+                genres: "Приключения, Драма, Фантастика"
+            },
+            {
+                title: "Зеленая миля",
+                poster: "https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_.jpg",
+                rating: 8.6,
+                year: 1999,
+                genres: "Криминал, Драма, Фэнтези"
+            }
+        ];
+
+        function displayMovies() {
+            const container = document.getElementById('movies-container');
+            
+            top9Movies.forEach(movie => {
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+                card.innerHTML = `
+                    <img src="${movie.poster}" alt="${movie.title}" class="movie-poster" 
+                         onerror="this.src='https://via.placeholder.com/300x450?text=Poster+Not+Found'">
+                    <div class="movie-info">
+                        <h3 class="movie-title">${movie.title}</h3>
+                        <div class="movie-rating">★ ${movie.rating}</div>
+                        <div class="movie-year">${movie.year}</div>
+                        <div class="movie-genres">${movie.genres}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        displayMovies();
+    </script>
+</body>
+</html>

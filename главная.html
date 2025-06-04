@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #1a1a2e,#16213e,#0f3460,#1a1a2e);
+            background-size: 400%, 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+        }
+        @keyframes GradientGB {
+            0%{
+                background-position: 0%, 50%;
+            }
+            50%{
+                background-position: 100%, 500%;
+            }
+            100%{
+                background-color: 0%,50%;
+            }
+        }
+        header {
+            width: 100%;
+            background: rgba(30, 30, 50, 0.9);
+            padding: 15px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-con {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            float: left;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 5px 0;
+        }
+        
+        .nav-buttons {
+            float: right;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            margin-left: 15px;
+            padding: 5px 15px;
+            background-color: #ddd;
+            border: 1px solid #999;
+            border-radius: 3px;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .nav-button:hover {
+            background-color: #ccc;
+        }
+        .movies-container {
+            width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .movie-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+        
+       
+        .movie-poster {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .movie-info {
+            padding: 15px;
+            flex-grow: 1;
+        }
+        
+        .movie-title {
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            font-size: 16px;
+        }
+        
+        .movie-rating {
+            color: #f5c518;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .movie-year {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .movie-genres {
+            color: #555;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+                        gap: 10px;
+        }
+        
+        .page-btn {
+            padding: 8px 15px;
+        background: #ddd;
+        border: none;
+         border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .page-btn.active {
+          background: #555;
+            color: white;
+        }
+        div[class="logo"]{
+            background-color: black;
+                padding: 15px, 20px;
+        border-radius:  10px;
+    }
+        .search-container {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+#search-input {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    flex-grow: 1;
+    font-size: 16px;
+}
+
+#search-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#search-btn:hover {
+    background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-con">
+            <div class="logo">КиноГид</div>
+            <div class="nav-buttons">
+                <a href="топ250.html" class="nav-button">Топ 50</a>
+                <a href="фильмы.html" class="nav-button">Главная страничка</a>
+            </div>
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Поиск фильмов..." 
+                >
+                <button id="search-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px;">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                    Найти
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="movies-container" id="movies-container">
+        
+    </div>
+    
+    <div class="pagination" id="pagination">
+        
+    </div>
+    
+    <div style="width: 1200px; margin: 20px auto;">
+        <h1>Все фильмы которые не лень было добавить</h1>
+        <script>
+            
+            const movies = [
+                {
+                    title: "Американский психопат",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZTM2ZGJmNjQtN2UyOS00NjcxLWFjMDktMDE2NzMyNTZlZTBiXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                    rating: 7.6,
+                    year: 2000,
+                    genres: "Криминал, Триллер"
+                },
+                {
+                    title: "Бойцовский клуб",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                    rating: 8.8,
+                    year: 1999,
+                    genres: "Драма, Триллер"
+                },
+                {
+                    title: "Декстер",
+                    poster: "posters/dexter-2006.png",
+                    rating: 8.6,
+                    year: 2006,
+                    genres: "Криминал, Драма, Триллер"
+                },
+                {
+                    title: "DEXTER: RESURRECTION",
+                    poster: "https://m.media-amazon.com/images/M/MV5BODg0Mjk1NDk1NF5BMl5BanBnXkFtZTcwNjEyMzEzMw@@._V1_.jpg",
+                    rating: 8.5,
+                    year: 2021,
+                    genres: "Криминал, Драма"
+                },
+                {
+                    title: "Техасская резня бензопилой",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNzQzMzJhZTEtOWM4NS00MTdhLTg0YjgtMjM4MDRkZjUwZDBlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+                    rating: 7.4,
+                    year: 1974,
+                    genres: "Ужасы"
+                },
+                {
+                    title: "Мальчишник в Вегасе",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNTA5NzYzMzU1N15BMl5BanBnXkFtZTcwMDA3MTI0NA@@._V1_.jpg",
+                    rating: 7.7,
+                    year: 2009,
+                    genres: "Комедия"
+                },
+                {
+                    title: "Волк с Уолл-стрит",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+                    rating: 8.2,
+                    year: 2013,
+                    genres: "Биография, Комедия, Криминал"
+                },
+                {
+                    title: "Дьявол носит Prada",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZjQ3ZTIzOTItMGNjNC00MWRmLWJlMGEtMjJmMDM5ZDIzZGM3XkEyXkFqcGdeQXVyMTkzODUwNzk@._V1_.jpg",
+                    rating: 6.9,
+                    year: 2006,
+                    genres: "Комедия, Драма"
+                },
+                {
+                    title: "Форсаж",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNzlkNzVjMDMtOTdhZC00MGE1LTkxODctMzFmMjkwZmMxZjFhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+                    rating: 6.8,
+                    year: 2001,
+                    genres: "Боевик, Криминал, Триллер"
+                },
+                {
+                    title: "Форест Гамп",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+                    rating: 8.8,
+                    year: 1994,
+                    genres: "Драма, Романтика"
+                },
+                {
+                    title: "Побег из Шоушенка",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+                    rating: 9.3,
+                    year: 1994,
+                    genres: "Драма"
+                },
+                {
+                    title: "Крестный отец",
+                    poster: "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                    rating: 9.2,
+                    year: 1972,
+                    genres: "Криминал, Драма"
+                },
+                {
+                    title: "11 друзей Оушена",
+                    poster: "https://m.media-amazon.com/images/M/MV5BYzVmYzVkMmUtOGRhMi00MTNmLThlMmUtZTljYjlkMjNkMjJkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg",
+                    rating: 7.7,
+                    year: 2001,
+                    genres: "Криминал, Триллер"
+                },
+                {
+                    title: "Молчание ягнят",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNjNhZTk0ZmEtNjJhMi00YzFlLWE1MmEtYzM1M2ZmMGMwMTU4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+                    rating: 8.6,
+                    year: 1991,
+                    genres: "Криминал, Драма, Триллер"
+                },
+                {
+                    title: "Зеленая миля",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_.jpg",
+                    rating: 8.6,
+                    year: 1999,
+                    genres: "Криминал, Драма, Фэнтези"
+                },
+                {
+                    title: "Джанго освобожденный",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwODg1MDU4OA@@._V1_.jpg",
+                    rating: 8.4,
+                    year: 2012,
+                    genres: "Драма, Вестерн"
+                },
+                {
+                    title: "Криминальное чтиво",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                    rating: 8.9,
+                    year: 1994,
+                    genres: "Криминал, Драма"
+                },
+                {
+                    title: "Город грехов",
+                    poster: "https://m.media-amazon.com/images/M/MV5BODZmYjMwNzEtNzVhNC00ZTRmLTk2M2UtNzE1MTQ2ZDAxNjc2XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+                    rating: 8.0,
+                    year: 2005,
+                    genres: "Криминал, Триллер"
+                },
+                {
+                    title: "Заклятие",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMTM3NDA1NDMyMV5BMl5BanBnXkFtZTcwNTUyNDI5OQ@@._V1_.jpg",
+                    rating: 7.5,
+                    year: 2013,
+                    genres: "Ужасы, Триллер"
+                },
+                {
+                    title: "Спасти рядового Райана",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg",
+                    rating: 8.6,
+                    year: 1998,
+                    genres: "Драма, Война"
+                },
+                {
+                    title: "Хэллоуин",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNzk1OGU2NmMtNTdhZC00NjdlLWE5YTMtZTQ0MGExZTQzOGQyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+                    rating: 7.7,
+                    year: 1978,
+                    genres: "Ужасы, Триллер"
+                },
+                {
+                    title: "Пятница 13-е",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNWMxYTYzYWQtNGZmNy00MTg5LTk1N2MtNzQ5NjQxYjQ5NTJhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+                    rating: 6.4,
+                    year: 1980,
+                    genres: "Ужасы"
+                },
+                {
+                    title: "Анабель",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMjM2ODIxNzM1Ml5BMl5BanBnXkFtZTgwNTM1NTg4MTE@._V1_.jpg",
+                    rating: 5.4,
+                    year: 2014,
+                    genres: "Ужасы, Триллер"
+                },
+                {
+                    title: "Синистер",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMjI5MTg1Njg0M15BMl5BanBnXkFtZTcwNzg2Mjc4Nw@@._V1_.jpg",
+                    rating: 6.8,
+                    year: 2012,
+                    genres: "Фантастика, Триллер"
+                },
+                {
+                    title: "Тупой и еще тупее",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZDQwMjNiMTQtY2UwYy00NjhiLTk0ZWEtZWM5ZWMzNGFjNTVkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+                    rating: 7.3,
+                    year: 1994,
+                    genres: "Комедия"
+                },
+                {
+                    title: "Реквием по мечте",
+                    poster: "https://m.media-amazon.com/images/M/MV5BOTdiNzJlOWUtNWMwNS00NmFlLWI0YTEtZmI3YjIzZWUyY2Y3XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+                    rating: 8.3,
+                    year: 2000,
+                    genres: "Драма"
+                },
+                {
+                    title: "Титаник",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg",
+                    rating: 7.8,
+                    year: 1997,
+                    genres: "Драма, Романтика"
+                },
+                {
+                    title: "Властелин колец",
+                    poster: "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg",
+                    rating: 8.8,
+                    year: 2001,
+                    genres: "Приключения, Фэнтези"
+                },
+                {
+                    title: "Звездные войны",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                    rating: 8.6,
+                    year: 1977,
+                    genres: "Приключения, Фантастика"
+                },
+                {
+                    title: "Семь",
+                    poster: "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+                    rating: 8.6,
+                    year: 1995,
+                    genres: "Криминал, Драма, Триллер"
+                },
+                {
+                    title: "Интерстеллар",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+                    rating: 8.6,
+                    year: 2014,
+                    genres: "Приключения, Драма, Фантастика"
+                },
+                {
+                    title: "Рататуй",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMTMzODU0NTkxMF5BMl5BanBnXkFtZTcwMjQ4MzMzMw@@._V1_.jpg",
+                    rating: 8.1,
+                    year: 2007,
+                    genres: "Анимация, Комедия, Семейный"
+                },
+                {
+                    title: "Пианист",
+                    poster: "https://m.media-amazon.com/images/M/MV5BOWRiZDIxZjktMTA1NC00MDQ2LWEzMjUtMTliZmY3NjQ3ODJiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+                    rating: 8.5,
+                    year: 2002,
+                    genres: "Биография, Драма, Музыка"
+                },
+                {
+                    title: "Одержимость",
+                    poster: "https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
+                    rating: 8.5,
+                    year: 2014,
+                    genres: "Драма, Музыка"
+                },
+                {
+                    title: "Психо",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                    rating: 8.5,
+                    year: 1960,
+                    genres: "Ужасы, Триллер"
+                },
+                {
+                    title: "Терминатор",
+                    poster: "https://m.media-amazon.com/images/M/MV5BYTViNzMxZjEtZGEwNy00MDNiLWIzNGQtZDY2MjQ1OWViZjFmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+                    rating: 8.0,
+                    year: 1984,
+                    genres: "Боевик, Фантастика"
+                },
+                {
+                    title: "Бэтмен",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZWQ0OTQ3ODctMmE0MS00ODc2LTg0ZTEtZWIwNTUxOGExZTQ4XkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg",
+                    rating: 7.5,
+                    year: 1989,
+                    genres: "Боевик, Приключения, Фэнтези"
+                },
+                {
+                    title: "Человек-паук",
+                    poster: "https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_.jpg",
+                    rating: 7.4,
+                    year: 2002,
+                    genres: "Боевик, Приключения, Фантастика"
+                },
+                {
+                    title: "Чудо-женщина",
+                    poster: "https://m.media-amazon.com/images/M/MV5BNDFmZjgyMTEtYTk5MC00NmY0LWJhZjktOWY2MzI5YjkzODNlXkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_.jpg",
+                    rating: 7.4,
+                    year: 2017,
+                    genres: "Боевик, Приключения, Фантастика"
+                },
+                {
+                    title: "Бивень",
+                    poster: "https://m.media-amazon.com/images/M/MV5BMjMzMDMxNDUzMl5BMl5BanBnXkFtZTgwNjA0MTU4MTE@._V1_.jpg",
+                    rating: 6.0,
+                    year: 2014,
+                    genres: "Комедия, Ужасы"
+                }
+            ];
+    
+            
+            const moviesPerFirstPage = 27; 
+            const moviesPerPage = 9; 
+            let currentPage = 1;
+    
+            
+            function displayMovies(page) {
+                const container = document.getElementById('movies-container');
+                container.innerHTML = '';
+                
+                let start, end;
+                if (page === 1) {
+                    start = 0;
+                    end = moviesPerFirstPage;
+                } else {
+                    start = moviesPerFirstPage + (page - 2) * moviesPerPage;
+                    end = start + moviesPerPage;
+                }
+                
+                const moviesToShow = movies.slice(start, end);
+                
+                moviesToShow.forEach(movie => {
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.innerHTML = `
+                        <img src="${movie.poster}" alt="${movie.title}" class="movie-poster">
+                        <div class="movie-info">
+                            <h3 class="movie-title">${movie.title}</h3>
+                            <div class="movie-rating">★ ${movie.rating}</div>
+                            <div class="movie-year">${movie.year}</div>
+                            <div class="movie-genres">${movie.genres}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+    
+            
+            function setupPagination() {
+                const pagination = document.getElementById('pagination');
+                pagination.innerHTML = '';
+                
+                
+                const remainingMovies = movies.length - moviesPerFirstPage;
+                const additionalPages = Math.ceil(remainingMovies / moviesPerPage);
+                const pageCount = 1 + additionalPages; 
+                
+                for (let i = 1; i <= pageCount; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'page-btn';
+                    if (i === currentPage) btn.classList.add('active');
+                    btn.textContent = i;
+                    btn.addEventListener('click', () => {
+                        currentPage = i;
+                        displayMovies(currentPage);
+                        updatePaginationButtons();
+                    });
+                    pagination.appendChild(btn);
+                }
+            }
+    
+            
+            function updatePaginationButtons() {
+                const buttons = document.querySelectorAll('.page-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (parseInt(btn.textContent) === currentPage) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+    
+            
+            displayMovies(currentPage);
+            setupPagination();
+            function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const container = document.getElementById('movies-container');
+        const allCards = container.querySelectorAll('.movie-card');
+        
+        let hasResults = false;
+        
+        allCards.forEach(card => {
+            const title = card.querySelector('.movie-title').textContent.toLowerCase();
+            if (title.includes(searchTerm)) {
+                card.style.display = 'block';
+                hasResults = true;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        if (!hasResults) {
+            container.innerHTML = `
+                <div style="grid-column: 1/-1; color: white; text-align: center; padding: 50px;">
+                    Фильмы не найдены. Попробуйте другой запрос.
+                </div>
+            `;
+        }
+    }
+    
+    searchInput.addEventListener('input', performSearch);
+    searchBtn.addEventListener('click', performSearch);
+}
+displayMovies(currentPage);
+setupPagination();
+setupSearch();
+            
+        </script>
+                   
+        
+    </div>
+</body>
+</html>
